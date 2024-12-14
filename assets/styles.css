@@ -68,7 +68,7 @@ body.loaded {
     margin: auto;
 }
 
-#profile-image {
+#profileImage {
     width: 150px;
     height: 150px;
     border-radius: 100%;
@@ -76,12 +76,12 @@ body.loaded {
     margin: 0 auto 10px;
 }
 
-#image-credits {
+#imageCredits {
     font-size: 0.8rem;
     margin-bottom: 20px;
 }
 
-#image-credits a {
+#imageCredits a {
     color: var(--a-color);
     text-decoration: none;
 }
@@ -96,7 +96,7 @@ h1 {
     margin-bottom: 20px;
 }
 
-#social-icons {
+#socialIcons {
     display: flex;
     justify-content: center;
     gap: 20px;
@@ -117,7 +117,7 @@ h1 {
     background-color: var(--hover-color);
 }
 
-.icon-svg {
+.iconSvg {
     width: 24px;
     height: 24px;
     fill: var(--text-color);
@@ -156,19 +156,19 @@ h1 {
     text-decoration: none;
 }
 
-#album-container {
+#albumContainer {
     flex: 0 0 100px; /* Fixed size for the album cover */
     margin-right: 10px;
 }
 
-#album-cover {
+#albumCover {
     width: 100px;
     height: 100px;
     object-fit: cover;
     border-radius: 8px;
 }
 
-#info-container {
+#infoContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -176,7 +176,7 @@ h1 {
     flex: 1; /* Allow it to take remaining space */
 }
 
-#info-container div {
+#infoContainer div {
     margin-bottom: 5px;
     color: var(--nowplaying-text);
 }
@@ -191,12 +191,12 @@ h1 {
         align-items: center;
     }
 
-    #album-container {
+    #albumContainer {
         margin-right: 0;
         margin-bottom: 10px;
     }
 
-    #info-container {
+    #infoContainer {
         text-align: center;
     }
 }

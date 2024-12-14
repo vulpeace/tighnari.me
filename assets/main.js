@@ -11,7 +11,7 @@ async function fetchRecentTrack() {
         const trackElem = document.getElementById('trackElem');
         const artistElem = document.getElementById('artistElem');
         const dateElem = document.getElementById('dateElem');
-        const albumCoverElem = document.getElementById('album-cover');
+        const albumCoverElem = document.getElementById('albumCover');
 
         trackElem.innerHTML = "";
         artistElem.innerHTML = "by ";
@@ -69,13 +69,13 @@ async function refetch() {
         if (trackElem.textContent != data.track) {
             const artistElem = document.getElementById('artistElem');
             const dateElem = document.getElementById('dateElem');
-            const albumCoverElem = document.getElementById('album-cover');
-            
-            trackElem.href = data.trackLink;
-            trackElem.textContent = data.track;
-            
-            artistElem.href = data.artistLink;
-            artistElem.textContent = data.artist;
+            const albumCoverElem = document.getElementById('albumCover');
+ 
+            trackElem.childNodes[0].href = data.trackLink;
+            trackElem.childNodes[0].textContent = data.track;
+
+            artistElem.childNodes[1].href = data.artistLink;
+            artistElem.childNodes[1].textContent = data.artist;
             
             if (data.date) {
                 const unixTimestamp = data.date;
@@ -89,9 +89,9 @@ async function refetch() {
                     hour12: true
                 });
 
-                dateElem.textContent = "on " + formattedDate;
+                dateElem.childNodes[0].textContent = "on " + formattedDate;
             } else {
-                dateElem.textContent = "Now playing 🎧";
+                dateElem.childNodes[0].textContent = "Now playing 🎧";
             }
 
             albumCoverElem.src = data.albumCover;
