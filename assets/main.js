@@ -1,4 +1,5 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+    await fetchRecentTrack();
     document.body.classList.add("loaded");
 });
 
@@ -11,7 +12,7 @@ async function fetchRecentTrack() {
         const trackElem = document.getElementById('trackElem');
         const artistElem = document.getElementById('artistElem');
         const dateElem = document.getElementById('dateElem');
-        const albumCoverElem = document.getElementById('albumCover');
+        const artworkElem = document.getElementById('artworkContainer');
 
         trackElem.innerHTML = "";
         artistElem.innerHTML = "by ";
@@ -32,6 +33,8 @@ async function fetchRecentTrack() {
         artistElem.appendChild(artistLinkElem);
 
         const statusElem = document.createElement('span');
+        statusElem.id = "status";
+
         if (data.date) {
             const unixTimestamp = data.date;
             const localDate = new Date(unixTimestamp * 1000);
@@ -50,7 +53,10 @@ async function fetchRecentTrack() {
         }
         dateElem.appendChild(statusElem);
 
+        const albumCoverElem = document.createElement('img');
+        albumCoverElem.id = "artwork";
         albumCoverElem.src = data.albumCover;
+        artworkElem.appendChild(albumCoverElem);
 
         nowPlayingElem.classList.add('loaded');
     } catch (error) {
@@ -64,18 +70,18 @@ async function refetch() {
         const response = await fetch('https://tighnari.me/api/recent-track');
         const data = await response.json();
 
-        const trackElem = document.getElementById('trackElem');
+        const trackElem = document.getElementById('track');
         
         if (trackElem.textContent != data.track) {
-            const artistElem = document.getElementById('artistElem');
-            const dateElem = document.getElementById('dateElem');
-            const albumCoverElem = document.getElementById('albumCover');
- 
-            trackElem.childNodes[0].href = data.trackLink;
-            trackElem.childNodes[0].textContent = data.track;
+            const artistElem = document.getElementById('artist');
+            const statusElem = document.getElementById('status');
+            const artworkElem = document.getElementById('artwork');
 
-            artistElem.childNodes[1].href = data.artistLink;
-            artistElem.childNodes[1].textContent = data.artist;
+            trackElem.href = data.trackLink;
+            trackElem.textContent = data.track;
+
+            artistElem.href = data.artistLink;
+            artistElem.textContent = data.artist;
             
             if (data.date) {
                 const unixTimestamp = data.date;
@@ -89,18 +95,16 @@ async function refetch() {
                     hour12: true
                 });
 
-                dateElem.childNodes[0].textContent = "on " + formattedDate;
+                statusElem.textContent = "on " + formattedDate;
             } else {
-                dateElem.childNodes[0].textContent = "Now playing 🎧";
+                statusElem.textContent = "Now playing 🎧";
             }
 
-            albumCoverElem.src = data.albumCover;
+            artwork.src = data.albumCover;
         }
     } catch (error) {
         console.error("Error fetching recent track:", error);
     }
 }
-
-fetchRecentTrack();
 
 setInterval(refetch, 10000);
