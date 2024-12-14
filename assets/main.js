@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 async function fetchRecentTrack() {
     try {
         const nowPlayingElem = document.getElementById('nowplaying');
-        const response = await fetch('/api/recent-track');
+        const response = await fetch('https://tighnari.me/api/recent-track');
         const data = await response.json();
 
         const trackElem = document.getElementById('trackElem');
@@ -61,7 +61,7 @@ async function fetchRecentTrack() {
 async function refetch() {
     try {
         const nowPlayingElem = document.getElementById('nowplaying');
-        const response = await fetch('/api/recent-track');
+        const response = await fetch('https://tighnari.me/api/recent-track');
         const data = await response.json();
 
         const trackElem = document.getElementById('trackElem');
