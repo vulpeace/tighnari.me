@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function fetchRecentTrack() {
     try {
-        const nowPlayingElem = document.getElementById('nowplaying');
         const response = await fetch('https://tighnari.me/api/recent-track');
         const data = await response.json();
 
@@ -39,8 +38,7 @@ async function fetchRecentTrack() {
             const unixTimestamp = data.date;
             const localDate = new Date(unixTimestamp * 1000);
             const formattedDate = localDate.toLocaleString('en-US', {
-                year: 'numeric',
-                month: 'long',
+                month: 'short',
                 day: 'numeric',
                 hour: 'numeric',
                 minute: 'numeric',
@@ -57,8 +55,6 @@ async function fetchRecentTrack() {
         albumCoverElem.id = "artwork";
         albumCoverElem.src = data.albumCover;
         artworkElem.appendChild(albumCoverElem);
-
-        nowPlayingElem.classList.add('loaded');
     } catch (error) {
         console.error("Error fetching recent track:", error);
     }
@@ -87,8 +83,7 @@ async function refetch() {
                 const unixTimestamp = data.date;
                 const localDate = new Date(unixTimestamp * 1000);
                 const formattedDate = localDate.toLocaleString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
+                    month: 'short',
                     day: 'numeric',
                     hour: 'numeric',
                     minute: 'numeric',

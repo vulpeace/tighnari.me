@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'Noto Sans';
     font-style: normal;
-    font-weight: 400 500;
+    font-weight: 400;
     font-stretch: 100%;
     font-display: swap;
-    src: url(https://fonts.gstatic.com/s/notosans/v38/o-0bIpQlx3QUlC5A4PNB6Ryti20_6n1iPHjc5a7duw.woff2) format('woff2');
+    src: url(https://fonts.gstatic.com/s/notosans/v38/o-0mIpQlx3QUlC5A4PNB6Ryti20_6n1iPHjcz6L1SoM-jCpoiyD9A-9a6VI.woff2) format('woff2');
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -62,8 +62,8 @@ body.loaded {
     background: var(--container-bg);
     width: 50%;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
     margin: auto;
 }
@@ -72,12 +72,10 @@ body.loaded {
     width: 150px;
     height: 150px;
     border-radius: 100%;
-    object-fit: cover;
-    margin: 0 auto 10px;
 }
 
 #imageCredits {
-    font-size: 0.8rem;
+    font-size: 0.6rem;
     margin-bottom: 20px;
 }
 
@@ -96,7 +94,7 @@ h1 {
     margin-bottom: 20px;
 }
 
-#socialIcons {
+#socials {
     display: flex;
     justify-content: center;
     gap: 20px;
@@ -109,7 +107,7 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 50%;
+    border-radius: 100%;
     transition: all 0.3s ease;
 }
 
@@ -121,7 +119,6 @@ h1 {
     width: 24px;
     height: 24px;
     fill: var(--text-color);
-    transition: all 0.3s ease;
 }
 
 #divider {
@@ -133,10 +130,10 @@ h1 {
 
 #nowplaying {
     display: flex;
-    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    flex-wrap: wrap;
     background-color: var(--nowplaying-bg);
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin: 0 auto;
     width: fit-content;
@@ -146,18 +143,16 @@ h1 {
 #nowplaying a {
     color: var(--nowplaying-text);
     text-decoration: none;
-    font-weight: 500;
 }
 
 #artworkContainer {
-    flex: 0 0 100px; /* Fixed size for the album cover */
+    flex: 0 0 100px;
     margin-right: 10px;
 }
 
 #artwork {
     width: 100px;
     height: 100px;
-    object-fit: cover;
     border-radius: 8px;
 }
 
@@ -165,12 +160,8 @@ h1 {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    text-align: left;
-    flex: 1; /* Allow it to take remaining space */
-}
-
-#infoContainer div {
-    margin-bottom: 5px;
+    align-items: flex-start;
+    flex: 1;
     color: var(--nowplaying-text);
 }
 
@@ -184,12 +175,12 @@ h1 {
         align-items: center;
     }
 
-    #albumContainer {
+    #artworkContainer {
         margin-right: 0;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
     }
 
     #infoContainer {
-        text-align: center;
+        align-items: stretch;
     }
 }
