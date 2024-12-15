@@ -8,28 +8,32 @@ async function fetchRecentTrack() {
         const response = await fetch('https://tighnari.me/api/recent-track');
         const data = await response.json();
 
-        const trackElem = document.getElementById('trackElem');
-        const artistElem = document.getElementById('artistElem');
-        const dateElem = document.getElementById('dateElem');
-        const artworkElem = document.getElementById('artworkContainer');
+        const nowplaying = document.getElementById('nowplaying');
+        const infoContainer = document.createElement('div');
+        infoContainer.id = "info";
 
-        trackElem.innerHTML = "";
-        artistElem.innerHTML = "by ";
-        dateElem.innerHTML = "";
+        const albumCoverElem = document.createElement('img');
+        albumCoverElem.id = "artwork";
+        albumCoverElem.src = data.albumCover;
+        nowplaying.appendChild(albumCoverElem);
+
 
         const trackLinkElem = document.createElement('a');
         trackLinkElem.id = "track";
         trackLinkElem.href = data.trackLink;
         trackLinkElem.target = "_blank";
         trackLinkElem.textContent = data.track;
-        trackElem.appendChild(trackLinkElem);
+        infoContainer.appendChild(trackLinkElem);
 
+        const artistElem = document.createElement('div');
+        artistElem.innerHTML = "by ";
         const artistLinkElem = document.createElement('a');
         artistLinkElem.id = "artist";
         artistLinkElem.href = data.artistLink;
         artistLinkElem.target = "_blank";
         artistLinkElem.textContent = data.artist;
         artistElem.appendChild(artistLinkElem);
+        infoContainer.appendChild(artistElem);
 
         const statusElem = document.createElement('span');
         statusElem.id = "status";
@@ -49,12 +53,9 @@ async function fetchRecentTrack() {
         } else {
             statusElem.textContent = "Now playing 🎧";
         }
-        dateElem.appendChild(statusElem);
+        infoContainer.appendChild(statusElem);
 
-        const albumCoverElem = document.createElement('img');
-        albumCoverElem.id = "artwork";
-        albumCoverElem.src = data.albumCover;
-        artworkElem.appendChild(albumCoverElem);
+        nowplaying.appendChild(infoContainer);
     } catch (error) {
         console.error("Error fetching recent track:", error);
     }
@@ -62,12 +63,11 @@ async function fetchRecentTrack() {
 
 async function refetch() {
     try {
-        const nowPlayingElem = document.getElementById('nowplaying');
         const response = await fetch('https://tighnari.me/api/recent-track');
         const data = await response.json();
 
         const trackElem = document.getElementById('track');
-        
+
         if (trackElem.textContent != data.track) {
             const artistElem = document.getElementById('artist');
             const statusElem = document.getElementById('status');
@@ -78,7 +78,7 @@ async function refetch() {
 
             artistElem.href = data.artistLink;
             artistElem.textContent = data.artist;
-            
+
             if (data.date) {
                 const unixTimestamp = data.date;
                 const localDate = new Date(unixTimestamp * 1000);

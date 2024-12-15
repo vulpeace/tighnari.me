@@ -44,6 +44,7 @@ body {
     margin: 0;
     padding: 0;
     height: 100vh;
+    min-width: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -145,18 +146,14 @@ h1 {
     text-decoration: none;
 }
 
-#artworkContainer {
-    flex: 0 0 100px;
-    margin-right: 10px;
-}
-
 #artwork {
     width: 100px;
     height: 100px;
     border-radius: 8px;
+    margin-right: 10px;
 }
 
-#infoContainer {
+#info {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -175,12 +172,12 @@ h1 {
         align-items: center;
     }
 
-    #artworkContainer {
+    #artwork {
         margin-right: 0;
         margin-bottom: 5px;
     }
 
-    #infoContainer {
+    #info {
         align-items: stretch;
     }
 }
