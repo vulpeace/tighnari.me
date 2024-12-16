@@ -26,6 +26,7 @@ async function fetchRecentTrack() {
         infoContainer.appendChild(trackLinkElem);
 
         const artistElem = document.createElement('div');
+        artistElem.id = "artistContainer";
         artistElem.innerHTML = "by ";
         const artistLinkElem = document.createElement('a');
         artistLinkElem.id = "artist";
