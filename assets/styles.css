@@ -38,13 +38,13 @@
 }
 
 body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 0;
     padding: 0;
     height: 100vh;
     min-width: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background-color: var(--bg-color);
     font-family: 'Noto Sans', 'Noto Emoji';
     color: var(--text-color);
@@ -57,13 +57,13 @@ body.loaded {
 }
 
 #container {
-    background: var(--container-bg);
-    width: 50%;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
     margin: auto;
+    padding: 20px;
+    width: 50%;
+    border-radius: 12px;
+    background: var(--container-bg);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #profileImage {
@@ -92,7 +92,7 @@ h1 {
     margin-bottom: 20px;
 }
 
-#socials {
+#links {
     display: flex;
     justify-content: center;
     gap: 20px;
@@ -100,11 +100,11 @@ h1 {
 }
 
 .icon {
-    width: 50px;
-    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 50px;
+    height: 50px;
     border-radius: 100%;
     transition: all 0.3s ease;
 }
@@ -120,23 +120,24 @@ h1 {
 }
 
 #divider {
+    margin: 20px 0;
     border: 0;
     height: 1px;
     background: var(--divider);
-    margin: 20px 0;
 }
 
 #nowplaying {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    background-color: #b7ad5c;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin: 0 auto;
+    padding: 20px;
     width: fit-content;
     max-width: 400px;
+    border-radius: 12px;
+    background-color: #b7ad5c;
+    color: #252100;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #nowplaying a {
@@ -145,8 +146,8 @@ h1 {
 }
 
 #artworkContainer {
-    max-height: 120px;
     margin-right: 10px;
+    max-height: 120px;
 }
 
 #artwork {
@@ -162,7 +163,6 @@ h1 {
     text-align: left;
     flex: 1;
     margin-right: 10px;
-    color: #252100;
 }
 
 #services {

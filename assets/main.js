@@ -9,89 +9,106 @@ async function fetchRecentTrack() {
         const data = await response.json();
 
         const nowplaying = document.getElementById('nowplaying');
-        const infoContainer = document.createElement('div');
-        infoContainer.id = "info";
 
         const artworkContainer = document.createElement('div');
         artworkContainer.id = "artworkContainer"
         const artworkElem = document.createElement('img');
         artworkElem.id = "artwork";
         artworkElem.src = data.albumCover;
+        artworkElem.alt = "Album artwork";
         artworkContainer.appendChild(artworkElem);
         nowplaying.appendChild(artworkContainer);
 
-        const trackLinkElem = document.createElement('a');
-        trackLinkElem.id = "track";
-        trackLinkElem.href = data.trackLink;
-        trackLinkElem.target = "_blank";
-        trackLinkElem.textContent = data.track;
-        infoContainer.appendChild(trackLinkElem);
+        nowplaying.appendChild(createInfoContainer(data));
+        nowplaying.appendChild(createServices(data));
 
-        const artistElem = document.createElement('div');
-        artistElem.id = "artistContainer";
-        artistElem.innerHTML = "by ";
-        const artistLinkElem = document.createElement('a');
-        artistLinkElem.id = "artist";
-        artistLinkElem.href = data.artistLink;
-        artistLinkElem.target = "_blank";
-        artistLinkElem.textContent = data.artist;
-        artistElem.appendChild(artistLinkElem);
-        infoContainer.appendChild(artistElem);
-
-        const statusElem = document.createElement('span');
-        statusElem.id = "status";
-
-        if (data.date) {
-            const unixTimestamp = data.date;
-            const localDate = new Date(unixTimestamp * 1000);
-            const formattedDate = localDate.toLocaleString('en-US', {
-                month: 'short',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: 'numeric',
-                hour12: true
-            });
-
-            statusElem.textContent = "on " + formattedDate;
-        } else {
-            statusElem.textContent = "Now playing 🎧";
-        }
-        infoContainer.appendChild(statusElem);
-
-        const services = document.createElement('div');
-        services.id = "services";
-
-        const youtubeLink = document.createElement('a');
-        youtubeLink.id = "youtube";
-        youtubeLink.title = "Youtube search";
-        youtubeLink.href = `https://www.youtube.com/results?search_query=${data.artist.replaceAll(' ', '+')}+${data.track.replaceAll(' ', '+')}`;
-        youtubeLink.target = "_blank";
-        youtubeLink.classList.add('icon');
-        
-        const youtubeIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        youtubeIcon.classList.add('iconSvg');
-        youtubeIcon.innerHTML = `<use xlink:href="#youtubeIcon"></use>`;
-        youtubeLink.appendChild(youtubeIcon);
-        services.appendChild(youtubeLink);
-
-        const spotifyLink = document.createElement('a');
-        spotifyLink.id = "spotify";
-        spotifyLink.title = "Open in Spotify";
-        spotifyLink.href = data.spotifyLink;
-        spotifyLink.target = "_blank";
-        spotifyLink.classList.add('icon');
-        
-        const spotifyIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        spotifyIcon.classList.add('iconSvg');
-        spotifyIcon.innerHTML = `<use xlink:href="#spotifyIcon"></use>`;
-        spotifyLink.appendChild(spotifyIcon);
-        services.appendChild(spotifyLink);
-
-        nowplaying.appendChild(infoContainer);
-        nowplaying.appendChild(services);
+        setInterval(refetch, 10000);
     } catch (error) {
         console.error("Error fetching recent track:", error);
+        nowplaying.childNodes = [];
+        nowplaying.textContent = "Couldn't fetch my scrobbling status (╥_╥)";
     }
+}
+
+function formatDate(unixTimestamp) {
+    const localDate = new Date(unixTimestamp * 1000);
+    const formattedDate = localDate.toLocaleString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+    });
+
+    return formattedDate;
+}
+
+function createInfoContainer(data) {
+    const infoContainer = document.createElement('div');
+    infoContainer.id = "info";
+
+    const trackLinkElem = document.createElement('a');
+    trackLinkElem.id = "track";
+    trackLinkElem.href = data.trackLink;
+    trackLinkElem.target = "_blank";
+    trackLinkElem.textContent = data.track;
+    infoContainer.appendChild(trackLinkElem);
+
+    const artistElem = document.createElement('div');
+    artistElem.id = "artistContainer";
+    artistElem.innerHTML = "by ";
+    const artistLinkElem = document.createElement('a');
+    artistLinkElem.id = "artist";
+    artistLinkElem.href = data.artistLink;
+    artistLinkElem.target = "_blank";
+    artistLinkElem.textContent = data.artist;
+    artistElem.appendChild(artistLinkElem);
+    infoContainer.appendChild(artistElem);
+
+    const statusElem = document.createElement('span');
+    statusElem.id = "status";
+
+    if (data.date) {
+        statusElem.textContent = "on " + formatDate(data.date);
+    } else {
+        statusElem.textContent = "Now playing 🎧";
+    }
+    infoContainer.appendChild(statusElem);
+
+    return infoContainer;
+}
+
+function createServices(data) {
+    const services = document.createElement('div');
+    services.id = "services";
+
+    const youtubeLink = document.createElement('a');
+    youtubeLink.id = "youtube";
+    youtubeLink.title = "Youtube search";
+    youtubeLink.href = `https://www.youtube.com/results?search_query=${data.artist.replaceAll(' ', '+')}+${data.track.replaceAll(' ', '+')}`;
+    youtubeLink.target = "_blank";
+    youtubeLink.classList.add('icon');
+    
+    const youtubeIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    youtubeIcon.classList.add('iconSvg');
+    youtubeIcon.innerHTML = `<use xlink:href="#youtubeIcon"></use>`;
+    youtubeLink.appendChild(youtubeIcon);
+    services.appendChild(youtubeLink);
+
+    const spotifyLink = document.createElement('a');
+    spotifyLink.id = "spotify";
+    spotifyLink.title = "Open in Spotify";
+    spotifyLink.href = data.spotifyLink;
+    spotifyLink.target = "_blank";
+    spotifyLink.classList.add('icon');
+
+    const spotifyIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    spotifyIcon.classList.add('iconSvg');
+    spotifyIcon.innerHTML = `<use xlink:href="#spotifyIcon"></use>`;
+    spotifyLink.appendChild(spotifyIcon);
+    services.appendChild(spotifyLink);
+
+    return services;
 }
 
 async function refetch() {
@@ -115,17 +132,7 @@ async function refetch() {
             artistElem.textContent = data.artist;
 
             if (data.date) {
-                const unixTimestamp = data.date;
-                const localDate = new Date(unixTimestamp * 1000);
-                const formattedDate = localDate.toLocaleString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    hour12: true
-                });
-
-                statusElem.textContent = "on " + formattedDate;
+                status.textContent = "on " + formatDate(data.date);
             } else {
                 statusElem.textContent = "Now playing 🎧";
             }
@@ -136,7 +143,7 @@ async function refetch() {
         }
     } catch (error) {
         console.error("Error fetching recent track:", error);
+        nowplaying.childNodes = [];
+        nowplaying.textContent = "Couldn't fetch my scrobbling status (╥_╥)";
     }
 }
-
-setInterval(refetch, 10000);
