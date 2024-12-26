@@ -1,3 +1,6 @@
+@import "./color_schemes/light.css";
+@import "./color_schemes/dark.css" screen and (prefers-color-scheme: dark);
+
 @font-face {
     font-family: 'Noto Sans';
     font-style: normal;
@@ -16,27 +19,6 @@
     unicode-range: u+1f3a7;
 }
 
-:root {
-    --bg-color: #fff8f6;
-    --text-color: #7a412a;
-    --a-color: #676016;
-    --container-bg: #f9ebe7;
-    --hover-color: rgba(122, 65, 42, 0.08);
-    --divider: #d9c2bb;
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg-color: #181210;
-        --text-color: #ffb599;
-        --a-color: #ad4a2e;
-        --container-bg: #251e1c;
-        --hover-color: rgba(255, 181, 153, 0.08);
-        --nowplaying-text: #252100;
-        --divider: #53433f;
-    }
-}
-
 body {
     display: flex;
     justify-content: center;
@@ -44,10 +26,9 @@ body {
     margin: 0;
     padding: 0;
     height: 100vh;
-    min-width: 200px;
-    background-color: var(--bg-color);
+    min-width: 400px;
+    background-color: var(--md-sys-color-surface);
     font-family: 'Noto Sans', 'Noto Emoji';
-    color: var(--text-color);
     opacity: 0;
     transition: opacity 1.5s ease-in-out;
 }
@@ -57,12 +38,19 @@ body.loaded {
 }
 
 #container {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    align-items: center;
     margin: auto;
     padding: 20px;
-    width: 50%;
-    border-radius: 12px;
-    background: var(--container-bg);
+    width: 80%;
+    height: 85%;
+    border-top-left-radius: 28px;
+    background: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-primary);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -78,7 +66,7 @@ body.loaded {
 }
 
 #imageCredits a {
-    color: var(--a-color);
+    color: var(--md-sys-color-primary);
     text-decoration: none;
 }
 
@@ -96,7 +84,6 @@ h1 {
     display: flex;
     justify-content: center;
     gap: 20px;
-    margin-bottom: 20px;
 }
 
 .icon {
@@ -116,14 +103,14 @@ h1 {
 .iconSvg {
     width: 24px;
     height: 24px;
-    fill: var(--text-color);
+    fill: var(--md-sys-color-primary);
 }
 
 #divider {
-    margin: 20px 0;
     border: 0;
     height: 1px;
-    background: var(--divider);
+    width: 50%;
+    background: var(--md-sys-color-outline);
 }
 
 #nowplaying {
@@ -135,13 +122,13 @@ h1 {
     width: fit-content;
     max-width: 400px;
     border-radius: 12px;
-    background-color: #b7ad5c;
-    color: #252100;
+    background-color: var(--md-sys-color-tertiary-container);
+    color: var(--md-sys-color-on-tertiary-container);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #nowplaying a {
-    color: #252100;
+    color: var(--md-sys-color-on-tertiary-container);
     text-decoration: none;
 }
 
@@ -172,16 +159,19 @@ h1 {
 }
 
 #services .iconSvg {
-    fill: #252100;
+    fill: var(--md-sys-color-on-tertiary-container);
 }
 
 #services .icon:hover {
-    background-color: rgba(25, 21, 0, 0.08);
+    background-color: var(--services-hover-color);
 }
 
 @media (max-width: 768px) {
     #container {
+        position: unset;
         width: 75%;
+        height: unset;
+        border-radius: 12px;
     }
 
     #nowplaying {

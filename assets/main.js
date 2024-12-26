@@ -98,7 +98,7 @@ function createServices(data) {
     const spotifyLink = document.createElement('a');
     spotifyLink.id = "spotify";
     spotifyLink.title = "Open in Spotify";
-    spotifyLink.href = data.spotifyLink;
+    spotifyLink.href = data.spotifyLink ? data.spotifyLink : `https://open.spotify.com/search/${encodeURIComponent(`${data.artist}`)}`;
     spotifyLink.target = "_blank";
     spotifyLink.classList.add('icon');
 
@@ -132,14 +132,14 @@ async function refetch() {
             artistElem.textContent = data.artist;
 
             if (data.date) {
-                status.textContent = "on " + formatDate(data.date);
+                statusElem.textContent = "on " + formatDate(data.date);
             } else {
                 statusElem.textContent = "Now playing 🎧";
             }
 
             artwork.src = data.albumCover;
             youtubeLink.href = `https://www.youtube.com/results?search_query=${data.artist.replaceAll(' ', '+')}+${data.track.replaceAll(' ', '+')}`;
-            spotifyLink.href = data.spotifyLink;
+            spotifyLink.href = data.spotifyLink ? data.spotifyLink : `https://open.spotify.com/search/${encodeURIComponent(`${data.artist}`)}`;
         }
     } catch (error) {
         console.error("Error fetching recent track:", error);
