@@ -6,8 +6,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function fetchRecentTrack() {
     try {
         const response = await fetch('https://tighnari.me/api/recent-track');
-        const data = await response.json();
 
+        if (!response.ok) {
+            throw new Error(await response.text());
+        }
+
+        const data = await response.json();
         const nowplaying = document.getElementById('nowplaying');
 
         const artworkContainer = document.createElement('div');
@@ -114,6 +118,11 @@ function createServices(data) {
 async function refetch() {
     try {
         const response = await fetch('https://tighnari.me/api/recent-track');
+
+        if (!response.ok) {
+            throw new Error(await response.text());
+        }
+
         const data = await response.json();
 
         const trackElem = document.getElementById('track');
