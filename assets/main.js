@@ -74,8 +74,10 @@ function createInfoContainer(data) {
 
     if (data.date) {
         statusElem.textContent = "on " + formatDate(data.date);
+        statusElem.setAttribute("data-active", true);
     } else {
         statusElem.textContent = "Now playing 🎧";
+        statusElem.setAttribute("data-active", false);
     }
     infoContainer.appendChild(statusElem);
 
@@ -126,8 +128,9 @@ async function refetch() {
         const data = await response.json();
 
         const trackElem = document.getElementById('track');
+        const statusElem = document.getElementById('status');
 
-        if (trackElem.textContent != data.track) {
+        if ((trackElem.textContent != data.track) || (statusElem.getAttribute("data-active") != data.date)) {
             const artistElem = document.getElementById('artist');
             const statusElem = document.getElementById('status');
             const artworkElem = document.getElementById('artwork');
@@ -141,7 +144,7 @@ async function refetch() {
             artistElem.textContent = data.artist;
 
             if (data.date) {
-                status.textContent = "on " + formatDate(data.date);
+                statusElem.textContent = "on " + formatDate(data.date);
             } else {
                 statusElem.textContent = "Now playing 🎧";
             }
@@ -151,8 +154,12 @@ async function refetch() {
             spotifyLink.href = data.spotifyLink;
         }
     } catch (error) {
-        console.error("Error fetching recent track:", error);
-        nowplaying.childNodes = [];
-        nowplaying.textContent = "Couldn't fetch my scrobbling status (╥_╥)";
+        if (error instanceof TypeError) {
+            fetchRecentTrack();
+        } else {
+            console.error("Error fetching recent track:", error);
+            nowplaying.childNodes = [];
+            nowplaying.textContent = "Couldn't fetch my scrobbling status (╥_╥)";
+        }
     }
 }
