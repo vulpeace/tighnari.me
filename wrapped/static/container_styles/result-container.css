@@ -1,0 +1,55 @@
+#resultContainer {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    box-sizing: border-box;
+    padding: 32px;
+    width: fit-content;
+    max-width: 403px;
+    height: 100%;
+    border-radius: var(--md-sys-shape-corner-extra-large);
+    background-color: var(--md-sys-color-surface);
+    white-space: pre-wrap;
+}
+
+#imageContainer {
+    align-self: center;
+    max-height: 240px;
+    margin: 55px 0 41px 0;
+}
+
+#imageContainer img {
+    width: 240px;
+    height: 240px;
+}
+
+#statsContainer {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 16px;
+}
+
+#progressContainer {
+    text-align: center;
+    align-self: center;
+}
+
+#errorElem {
+    text-align: center;
+    padding: 16px;
+    margin: 16px;
+    border-radius: var(--md-sys-shape-corner-medium);
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+}
+
+#saveButton {
+    align-self: flex-end;
+}
+
+md-circular-progress {
+    margin-bottom: 16px;
+    align-self: center;
+}

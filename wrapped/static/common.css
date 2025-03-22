@@ -1,0 +1,33 @@
+@import "./color_schemes/light.css";
+@import "./color_schemes/dark.css" screen and (prefers-color-scheme: dark);
+
+:root {
+    --md-ref-typeface-brand: 'Noto Sans';
+    --md-ref-typeface-plain: 'Noto Sans';
+
+    --md-sys-typescale-headline-large-weight: 700;
+    --md-sys-typescale-headline-large-size: 2.5rem;
+
+    --md-sys-typescale-title-medium-font: 'Montserrat';
+    --md-sys-typescale-title-medium-weight: 700;
+
+    --md-sys-typescale-headline-large-font: 'Montserrat';
+    --md-sys-typescale-display-large-weight: 500;
+    --md-sys-typescale-display-large-size: 5rem;
+
+    --md-sys-shape-corner-medium: 12px;
+    --md-sys-shape-corner-extra-large: 28px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface-variant);
+    font-family: 'Noto Sans';
+}

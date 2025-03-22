@@ -1,0 +1,71 @@
+@import "common.css";
+@import "./container_styles/info-container.css";
+@import "./container_styles/result-container.css";
+
+#bodyContainer {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    gap: 16px;
+}
+
+#topBar {
+    display: flex;
+    width: 100%;
+    height: 10%;
+}
+
+body a {
+    color: var(--md-sys-color-primary);
+    text-decoration: none;
+}
+
+md-dialog {
+    scrollbar-color: var(--md-sys-color-on-surface-variant) var(--md-sys-color-surface-container-high);
+}
+
+@media (max-width: 768px) {
+    :root {
+        --md-ref-typeface-brand: 'Noto Sans';
+        --md-ref-typeface-plain: 'Noto Sans';
+    
+        --md-sys-typescale-headline-large-weight: 700;
+        --md-sys-typescale-headline-large-size: 2rem;
+    
+        --md-sys-typescale-title-medium-font: 'Montserrat';
+        --md-sys-typescale-title-medium-weight: 700;
+    
+        --md-sys-typescale-headline-large-font: 'Montserrat';
+        --md-sys-typescale-display-large-weight: 500;
+        --md-sys-typescale-display-large-size: 4rem;
+    }
+
+    body {
+        overflow: scroll;
+        height: unset;
+    }
+
+    #bodyContainer {
+        flex-direction: column;
+        width: 100%;
+        margin: 0;
+    }
+
+    #infoContainer {
+        margin: auto;
+        width: 100%;
+        height: fit-content;
+    }
+
+    #inputContainer {
+        margin: 16px;
+    }
+
+    #resultContainer {
+        margin: auto;
+        width: 100%;
+        height: 640px;
+    }
+}
