@@ -5,9 +5,8 @@
 #bodyContainer {
     display: flex;
     flex-direction: row;
-    width: fit-content;
-    height: fit-content;
-    margin: auto;
+    width: 100%;
+    height: 100%;
     gap: 16px;
 }
 
@@ -20,6 +19,11 @@
 body a {
     color: var(--md-sys-color-primary);
     text-decoration: none;
+}
+
+#confirmResetButton {
+    --md-filled-button-container-color: var(--md-sys-color-error);
+    --md-filled-button-label-text-color: var(--md-sys-color-on-error);
 }
 
 md-dialog {

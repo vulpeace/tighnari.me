@@ -7,17 +7,20 @@
     position: relative;
     box-sizing: border-box;
     padding: 32px;
-    width: fit-content;
+    width: 50%;
     min-width: fit-content;
-    height: fit-content;
-    border-radius: var(--md-sys-shape-corner-extra-large);
+    height: 100%;
+    border-radius: 0 28px 0 0;
     background-color: var(--md-sys-color-surface);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
     margin-top: 16px;
-    color: var(--md-sys-color-primary);
+}
+
+#brandName {
+    color: #d51007;
 }
 
 #inputContainer {
@@ -34,13 +37,8 @@ h1 {
     margin: 0 0 16px 0;
 }
 
-fieldset {
-    display: contents;
-}
-
 #checkboxContainer {
     display: flex;
-    align-items: center;
     gap: 16px;
 }
 

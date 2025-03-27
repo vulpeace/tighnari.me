@@ -3,7 +3,7 @@
 
 :root {
     --md-ref-typeface-brand: 'Noto Sans';
-    --md-ref-typeface-plain: 'Noto Sans';
+    --md-ref-typeface-plain: 'Montserrat';
 
     --md-sys-typescale-headline-large-weight: 700;
     --md-sys-typescale-headline-large-size: 2.5rem;
@@ -14,6 +14,7 @@
     --md-sys-typescale-headline-large-font: 'Montserrat';
     --md-sys-typescale-display-large-weight: 500;
     --md-sys-typescale-display-large-size: 5rem;
+    --md-sys-typescale-display-medium-font: 'Montserrat';
 
     --md-sys-shape-corner-medium: 12px;
     --md-sys-shape-corner-extra-large: 28px;

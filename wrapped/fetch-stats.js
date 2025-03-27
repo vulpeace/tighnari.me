@@ -228,8 +228,7 @@ export async function fetchStats() {
 
         const artistImage = await fetchArtistImage(token, lastfmApiKey, username, topArtists[0].name);
 
-        return { "artists": topArtists, "artistImage": artistImage, "songs": topSongs, "minutesListened": minutesListened,
-            "tracksTotal": jsonLength };
+        return { "artists": topArtists, "artistImage": artistImage, "songs": topSongs, "minutesListened": minutesListened };
     } catch(error) {
         throw error;
     }

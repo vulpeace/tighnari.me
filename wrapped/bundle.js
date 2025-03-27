@@ -5576,8 +5576,7 @@ async function fetchStats() {
 
         const artistImage = await fetchArtistImage(token, lastfmApiKey, username, topArtists[0].name);
 
-        return { "artists": topArtists, "artistImage": artistImage, "songs": topSongs, "minutesListened": minutesListened,
-            "tracksTotal": jsonLength };
+        return { "artists": topArtists, "artistImage": artistImage, "songs": topSongs, "minutesListened": minutesListened };
     } catch(error) {
         throw error;
     }
@@ -5587,12 +5586,12 @@ async function drawImage(ctx, response) {
     return new Promise((resolve, reject) => {
         const image = new Image();
         image.addEventListener("load", () => {
-            const x = 220;
+            const x = 234;
             const y = 196;
-            ctx.drawImage(image, x, y, 640, 640);
+            ctx.drawImage(image, x, y, 612, 612);
             resolve();
         });
-        image.addEventListener("error", reject);
+        image.addEventListener('error', reject);
         image.src = response.artistImage;
         image.crossOrigin = '';
     });
@@ -5640,7 +5639,7 @@ function drawMinutes(ctx, response) {
     const paddingLeft = 96;
 
     ctx.font = "500 36px 'Noto Sans'";
-    ctx.fillStyle = window.getComputedStyle(document.getElementById('resultContainer')).getPropertyValue('color');
+    ctx.fillStyle = window.getComputedStyle(document.getElementById('infoContainer')).getPropertyValue('color');
     ctx.fillText("Minutes Listened", paddingLeft, startY);
 
     ctx.font = "700 108px 'Montserrat'";
@@ -5649,13 +5648,13 @@ function drawMinutes(ctx, response) {
 
 function drawSignature(ctx) {
     ctx.font = "700 48px 'Montserrat'";
-    ctx.fillStyle = window.getComputedStyle(document.getElementById('resultContainer')).getPropertyValue('color');
+    ctx.fillStyle = window.getComputedStyle(document.getElementById('infoContainer')).getPropertyValue('color');
 
     ctx.fillText("TIGHNARI.ME/WRAPPED", 406, 1848);
 }
 
 async function drawCanvas(response) {
-    response = JSON.parse(response);
+    // response = JSON.parse(response);
     const canvasWidth = 1080;
     const canvasHeight = 1920;
 
@@ -5664,7 +5663,7 @@ async function drawCanvas(response) {
     canvas.height = canvasHeight;
     const context = canvas.getContext("2d");
 
-    context.fillStyle = window.getComputedStyle(document.getElementById('resultContainer')).getPropertyValue('background-color');
+    context.fillStyle = window.getComputedStyle(document.getElementById('infoContainer')).getPropertyValue('background-color');
     context.beginPath();
     context.rect(0, 0, canvasWidth, canvasHeight);
     context.fill();
@@ -5678,17 +5677,19 @@ async function drawCanvas(response) {
 }
 
 document.adoptedStyleSheets.push(styles.styleSheet);
+document.getElementById('exampleImage').style.height = `${document.getElementById('infoContainer').offsetHeight * 0.7}px`;
 
 document.getElementById('startButton').addEventListener('click', validate);
-document.getElementById('resetButton').addEventListener('click', resetButtonState);
-document.getElementById('infoButton').addEventListener('click', openDialog);
+document.getElementById('resetButton').addEventListener('click', openResetDialog);
+document.getElementById('infoButton').addEventListener('click', openHelpDialog);
 
 async function generateWrapped() {
     try {
         const startButton = document.getElementById('startButton');
         startButton.setAttribute('disabled', true);
-        const lengthCheckbox = document.getElementById('lengthCheckbox');
-        lengthCheckbox.setAttribute('disabled', true);
+        for (let i = 0; i < 5; i++) {
+            document.getElementById('inputForm').children[i].children[0].setAttribute('disabled', true);
+        }
         const resultContainer = document.getElementById('resultContainer');
         resultContainer.style.display = 'flex';
         resultContainer.textContent = '';
@@ -5707,75 +5708,29 @@ async function generateWrapped() {
 
         const response = await fetchStats();
 
-        const imageContainer = document.createElement('div');
-        imageContainer.id = 'imageContainer';
-        const artistImage = document.createElement('img');
-        artistImage.src = response.artistImage;
-        imageContainer.appendChild(artistImage);
-
-        const artistsElem = document.createElement('div');
-        const artistsHeader = document.createElement('p');
-        artistsHeader.classList.add('md-typescale-body-medium');
-        artistsHeader.textContent = 'Top Artists';
-        artistsElem.appendChild(artistsHeader);
-        artistsElem.id = 'artists';
-        artistsElem.style.marginRight = '64px';
-        for (let i = 0; i < 5; i++) {
-            const artist = document.createElement('span');
-            artist.classList.add('md-typescale-title-medium');
-            artist.textContent = `${i + 1} ${response.artists[i].name}\n`;
-            artistsElem.appendChild(artist);
-        }
-
-        const songsElem = document.createElement('div');
-        const songsHeader = document.createElement('p');
-        songsHeader.classList.add('md-typescale-body-medium');
-        songsHeader.textContent = 'Top Songs';
-        songsElem.appendChild(songsHeader);
-        songsElem.id = 'songs';
-        for (let i = 0; i < 5; i++) {
-            const song = document.createElement('span');
-            song.classList.add('md-typescale-title-medium');
-            song.textContent = `${i + 1} ${response.songs[i].name}\n`;
-            songsElem.appendChild(song);
-        }
-
-        const statsContainer = document.createElement('div');
-        statsContainer.id = 'statsContainer';
-        statsContainer.appendChild(artistsElem);
-        statsContainer.appendChild(songsElem);
-
-        const minutesContainer = document.createElement('div');
-        minutesContainer.id = 'minutes';
-        const minutesHeader = document.createElement('p');
-        minutesHeader.classList.add('md-typescale-body-medium');
-        minutesHeader.textContent = 'Minutes Listened';
-        minutesContainer.appendChild(minutesHeader);
-        let minutes = document.createElement('span');
-        minutes.textContent = response.minutesListened.toLocaleString(undefined);
-        minutes.classList.add('md-typescale-headline-large');
-        minutesContainer.appendChild(minutes);
-
+        const canvasContainer = document.createElement('div');
+        canvasContainer.id = 'canvasContainer';
+        const canvas = await drawCanvas(response);
         resultContainer.textContent = '';
-        resultContainer.appendChild(imageContainer);
-        resultContainer.appendChild(statsContainer);
-        resultContainer.appendChild(minutesContainer);
-        const saveButton = document.createElement('md-filled-tonal-button');
+        const statsImage = document.createElement('img');
+        statsImage.id = 'result';
+        statsImage.src = canvas.toDataURL('image/jpeg', 0.9);
+        statsImage.style.height = `${document.getElementById('infoContainer').offsetHeight * 0.7}px`;
+        canvasContainer.appendChild(statsImage);
+
+        const saveButton = document.createElement('md-filled-button');
         saveButton.id = 'saveButton';
         saveButton.setAttribute('has-icon', true);
         saveButton.setAttribute('aria-label', 'Save a screenshot');
         saveButton.innerHTML = '<md-icon slot="icon" aria-hidden="true">download</md-icon>Save';
-        resultContainer.appendChild(saveButton);
+        canvasContainer.appendChild(saveButton);
+        resultContainer.appendChild(canvasContainer);
         saveButton.addEventListener('click', saveScreenshot);
 
-        const jsonData = document.createElement('span');
-        jsonData.setAttribute('hidden', true);
-        jsonData.id = 'jsonData';
-        jsonData.textContent = JSON.stringify(response);
-        document.body.appendChild(jsonData);
-
         startButton.removeAttribute('disabled');
-        lengthCheckbox.removeAttribute('disabled');
+        for (let i = 0; i < 5; i++) {
+            document.getElementById('inputForm').children[i].children[0].removeAttribute('disabled');
+        }
     } catch(error) {
         console.error(error);
 
@@ -5786,7 +5741,9 @@ async function generateWrapped() {
         resultContainer.appendChild(errorElem);
 
         startButton.removeAttribute('disabled');
-        lengthCheckbox.removeAttribute('disabled');
+        for (let i = 0; i < 5; i++) {
+            document.getElementById('inputForm').children[i].children[0].removeAttribute('disabled');
+        }
     }
 }
 
@@ -5797,11 +5754,20 @@ function validate() {
     }
 }
 
-function resetButtonState() {
-    window.location.reload();
+function openResetDialog() {
+    const dialog = document.getElementById('resetDialog');
+    dialog.shadowRoot.querySelector(".scroller").style.overflow = 'hidden';
+    dialog.setAttribute('open', true);
+    dialog.shadowRoot.querySelector(".scroller").style.overflow = '';
+    document.getElementById('confirmResetButton').addEventListener('click', async () => {
+        window.location.reload();
+    });
+    document.getElementById('cancelResetButton').addEventListener('click', async () => {
+        await dialog.close();
+    });
 }
 
-function openDialog() {
+function openHelpDialog() {
     const dialog = document.getElementById('infoDialog');
     dialog.shadowRoot.querySelector(".scroller").style.overflow = 'hidden';
     dialog.setAttribute('open', true);
@@ -5811,11 +5777,9 @@ function openDialog() {
     });
 }
 
-async function saveScreenshot() {
-    const canvas = await drawCanvas(document.getElementById('jsonData').textContent);
-    const dataURL = canvas.toDataURL('image/jpeg', 0.9);
+function saveScreenshot() {
     const a = document.createElement('a');
-    a.href = dataURL;
+    a.href = document.getElementById('result').src;
     const username = document.getElementById('username').value;
     a.download = `${username}_wrapped.jpg`;
     a.click();

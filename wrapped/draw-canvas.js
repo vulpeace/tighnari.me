@@ -2,12 +2,12 @@ async function drawImage(ctx, response) {
     return new Promise((resolve, reject) => {
         const image = new Image();
         image.addEventListener("load", () => {
-            const x = 220;
+            const x = 234;
             const y = 196;
-            ctx.drawImage(image, x, y, 640, 640);
+            ctx.drawImage(image, x, y, 612, 612);
             resolve();
         });
-        image.addEventListener("error", reject);
+        image.addEventListener('error', reject);
         image.src = response.artistImage;
         image.crossOrigin = '';
     });
@@ -55,7 +55,7 @@ function drawMinutes(ctx, response) {
     const paddingLeft = 96;
 
     ctx.font = "500 36px 'Noto Sans'";
-    ctx.fillStyle = window.getComputedStyle(document.getElementById('resultContainer')).getPropertyValue('color');
+    ctx.fillStyle = window.getComputedStyle(document.getElementById('infoContainer')).getPropertyValue('color');
     ctx.fillText("Minutes Listened", paddingLeft, startY);
 
     ctx.font = "700 108px 'Montserrat'";
@@ -64,13 +64,13 @@ function drawMinutes(ctx, response) {
 
 function drawSignature(ctx) {
     ctx.font = "700 48px 'Montserrat'";
-    ctx.fillStyle = window.getComputedStyle(document.getElementById('resultContainer')).getPropertyValue('color');
+    ctx.fillStyle = window.getComputedStyle(document.getElementById('infoContainer')).getPropertyValue('color');
 
     ctx.fillText("TIGHNARI.ME/WRAPPED", 406, 1848);
 }
 
 export async function drawCanvas(response) {
-    response = JSON.parse(response);
+    // response = JSON.parse(response);
     const canvasWidth = 1080;
     const canvasHeight = 1920;
 
@@ -79,7 +79,7 @@ export async function drawCanvas(response) {
     canvas.height = canvasHeight;
     const context = canvas.getContext("2d");
 
-    context.fillStyle = window.getComputedStyle(document.getElementById('resultContainer')).getPropertyValue('background-color');
+    context.fillStyle = window.getComputedStyle(document.getElementById('infoContainer')).getPropertyValue('background-color');
     context.beginPath();
     context.rect(0, 0, canvasWidth, canvasHeight);
     context.fill();

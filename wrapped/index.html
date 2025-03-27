@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>metrie's place</title>
+    <meta name="description" content="Gandharva Ville"/>
+    <script type="module" src="./bundle.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Noto+Sans:wght@500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&icon_names=close,download,help&display=block" />
+    <link rel="stylesheet" type="text/css" href="./static/wrapped.css" />
+  </head>
+  <body>
+    <md-dialog type="alert" id="resetDialog">
+      <span slot="headline">
+        <span style="flex: 1;">Reset the form?</span>
+      </span>
+      <form id="form" slot="content" method="dialog">
+        <p class="md-typescale-body-medium">Both your input and the output will be reset.</p>
+      </form>
+      <div slot="actions">
+        <md-text-button form="form" id="cancelResetButton" value="close" data-aria-label="Cancel">Cancel</md-text-button>
+        <md-filled-button id="confirmResetButton" data-aria-label="Confirm reset">Confirm reset</md-filled-button>
+      </div>
+    </md-dialog>
+    <md-dialog id="infoDialog">
+      <span slot="headline">
+        <span style="flex: 1;">How to use</span>
+        <md-icon-button form="form" id="closeButton" value="close" data-aria-label="Close dialog">
+          <md-icon aria-hidden="true">close</span>
+        </md-icon-button>
+      </span>
+      <form id="form" slot="content" method="dialog">
+        <p class="md-typescale-body-medium">💡"Approximate length" takes the average length from the set for tracks that could not be found on Spotify</p>
+        <p class="md-typescale-body-medium">❗API credentials do not provide access to your user account</p>
+        <p class="md-typescale-body-medium">First, create a Last.fm API account: <a href="https://www.last.fm/api/account/create" target="_blank">www.last.fm/api/account/create</a><br>
+          Copy and paste the API key to the respective field.
+        </p>
+        <p class="md-typescale-body-medium">Second, create an app in the Spotify developer dashboard: <a href="https://developer.spotify.com/dashboard" target="_blank">developer.spotify.com/dashboard</a>.
+          Naming and other information is not important, add something like '127.0.0.1' to Redirect URIs.<br>
+          This time, you will need to copy both client ID and client secret from the settings tab.
+        </p>
+        <p class="md-typescale-body-medium">❔A quick note on why we need Spotify API here</p>
+        <p class="md-typescale-body-medium">This app counts Listened Minutes as the sum of "times scrobbled * duration" for each track. The tags that a music player provides to Last.fm have to align
+          with how the track is stored in their database (that includes artist, album and track title tags), otherwise there won't be a duration record for that track.
+          That's where Spotify comes in handy - the app attempts to retrieve the duration from Spotify for each track where it's missing.</p>
+        <span class="md-typescale-body-medium">Source code is available on Github: <a href="https://github.com/vulpeace/last.fm-wrapped" target="_blank">vulpeace/last.fm-wrapped</a></span>
+      </form>
+    </md-dialog>
+    <div id="topBar"></div>
+    <div id="bodyContainer">
+      <div id="infoContainer">
+        <div id="infoHeader">
+          <div><h1 class="md-typescale-display-large" id="brandName">Last.fm </h1><h1 class="md-typescale-display-large">Wrapped</h1></div>
+          <p class="md-typescale-body-large">A very unofficial fully client-side Wrapped implementation for last.fm users</p>
+          <p class="md-typescale-body-large">Unfortunately still requires a Spotify account to pull track length from their API</p>
+          <p class="md-typescale-body-large">You can find all the necessary information under the help button <br /> ヾ(＾ ∇ ＾).</p>
+        </div>
+        <div id="inputContainer">
+          <form id="inputForm">
+            <div>
+              <md-outlined-text-field id="username" label="Last.fm Username" required error-text="Please fill out this field"></md-outlined-text-field>
+            </div>
+            <div>
+              <md-outlined-text-field id="lastfmkey" label="Last.fm API Key" required error-text="Please fill out this field"></md-outlined-text-field>
+            </div>
+            <div>
+              <md-outlined-text-field id="spotifyid" label="Spotify Client ID" required error-text="Please fill out this field"></md-outlined-text-field>
+            </div>
+            <div>
+              <md-outlined-text-field id="spotifysecret" label="Spotify Client secret" type="password" required error-text="Please fill out this field"></md-outlined-text-field>
+            </div>
+            <div id="checkboxContainer">
+              <md-checkbox id="lengthCheckbox" aria-label="Approximate length"></md-checkbox>
+              <label for="lengthCheckbox">Approximate length</label>
+            </div>
+          </form>
+          <div id="actionButtonContainer">
+            <md-text-button id="resetButton" type="reset">Reset</md-text-button>
+            <md-filled-button id="startButton" type="button">Start</md-filled-tonal-button>
+          </div>
+        </div>
+        <md-filled-tonal-icon-button id="infoButton" type="button" value="help" autofocus><md-icon aria-hidden="true">help</md-icon></md-filled-tonal-icon-button>
+      </div>
+      <div id="resultContainer">
+        <img id="exampleImage" src="./example.png" />
+      </div>
+    </div>
+  </body>
+</html>
